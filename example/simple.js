@@ -1,4 +1,5 @@
-var http = require('http');
+var express = require('express');
+var app = express();
 var Datastore = require('nedb');
 var db = new Datastore( { inMemoryOnly: true });
 
@@ -25,12 +26,22 @@ var model = {
     }
 };
 
-var odataServer = require("./../index.js")("http://localhost:1337")
+var ODataServer = require("./../index.js");
+
+var odataServer = new ODataServer()
     .model(model)
-    .onNeDB(function(es, cb) { cb(null, db)});
+    .onNeDB(function(es, cb) { 
+        cb(null, db);
+    });
 
+    app.use('/odata', odataServer.handle.bind(odataServer));
 
-http.createServer(odataServer.handle.bind(odataServer)).listen(1337);
+    app.use(express.static('./../example_client'));
+
+    app.listen(process.env.PORT || 3000, function() {
+        console.log("Server running...")
+    });
+
 
 db.insert({"_id": "1", "test": "a", num: 1, addresses: [{ "street":"a1"}]});
 db.insert({"_id": "2", "test": "b", num: 2, addresses: [{ "street":"a2"}] });

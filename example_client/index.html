@@ -1,0 +1,27 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+
+<script id="sap-ui-bootstrap" src="/framework/sap-ui-core.js" data-sap-ui-theme="sap_bluecrystal" data-sap-ui-libs="sap.m" data-sap-ui-compatVersion="edge" data-sap-ui-bindingSytax="complex" data-sap-ui-preload="async" data-sap-ui-resourceroots='{
+             "ch.soinwi.example": "./"
+         }'>
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function() {
+            new sap.m.Shell({
+                app: sap.ui.core.ComponentContainer({
+                    name: "ch.soinwi.example",
+                    height: "100%"
+                })
+            }).placeAt("content");
+        });
+    </script>
+    
+    </head>
+
+<body class="sapUiBody" id="content">
+
+</body>
+
+</html>
